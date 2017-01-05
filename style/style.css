@@ -1,0 +1,65 @@
+body {
+	background-image: url("../images/background.jpg");
+	background-size: cover;
+}
+
+#content {
+	border: 1px solid black;
+	background: #FAFAF5;
+	margin: 100px auto;
+	border-radius: 20px;
+    display: table;
+    padding: 15px;
+}
+
+hr {
+    margin-bottom: 30px;
+}
+
+.choice {
+    background-color: #F9FAF5;
+    border: 1px solid black;
+    width: 110px;
+    height: 35px;
+    margin-left: -1px;
+    margin-bottom: 10px;
+}
+
+.choice:first-of-type {
+    border-radius: 3px 0 0 3px; 
+}
+
+.choice:last-of-type {
+    border-radius: 0 3px 3px 0;
+}
+
+.clickable:hover {
+    background-color: #E6E8CC;
+    cursor: pointer;
+}
+
+.clicked {
+    background-color: #8A9159;
+}
+
+.icon {
+    margin: 10px auto 0 auto;
+    width: 45px;
+    height: 45px;
+}
+
+.resultBox {
+    text-align: center;
+}
+
+.advanceBtn {
+    margin: 0 auto;
+    display: block;
+    font-size: 15px;
+}
+
+
+
+
+
+
