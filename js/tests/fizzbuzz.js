@@ -12,17 +12,24 @@ var FizzBuzz = (function () {
     content = document.getElementById("content");
     header = Functions.getHeader("Test 2 - FizzBuzz");
     
+    // Disables all choice buttons
+    function disableButtons() {
+        for (i = 0; i < choiceList.length; i += 1) {
+            choiceList[i].classList.remove("clickable");
+            choiceList[i].removeEventListener("click", choiceClickEvent);
+        }
+    }
+    
     // Function to run when a choice button is clicked
-    function choiceClickEvent() {
+    function choiceClickEvent(e) {
         var correctAnswer, // The correct answer to this test
             usersChoice,   // The users choice
             resultBox,     // Div containing img and resultText
             img,           // Result image
             resultText;    // Result text
             
-        
         correctAnswer = "2";
-        usersChoice = this.id;
+        usersChoice = e.target.id;
         
         resultBox = document.createElement("div");
         resultBox.className = "resultBox";
@@ -31,15 +38,11 @@ var FizzBuzz = (function () {
         img.className = "icon";
         
         resultText = document.createElement("p");
-            
-        // Mark the button that was clicked
-        this.classList.add("clicked");
         
-        // Disable all buttons
-        for (i = 0; i < choiceList.length; i += 1) {
-            choiceList[i].classList.remove("clickable");
-            choiceList[i].removeEventListener("click", choiceClickEvent);
-        }
+        // Mark the button that was clicked
+        e.target.classList.add("clicked");
+        
+        disableButtons();
         
         // Check and set result
         if (usersChoice === correctAnswer) {
@@ -61,39 +64,48 @@ var FizzBuzz = (function () {
         content.appendChild(resultBox);
     }
     
-    // Initiate the test
-    function init() {
-        var question,     // Paragraph containing this tests question
-            choices,      // List of text for each choice button
-            choice,       // Choice button
-            fizzSequence; // Array containing the fizzbuzz sequence
-        
-        // Set default values for variables
-        fizzSequence = ["Fizz", "4", "Buzz", "Fizz", "7", "8", "Fizz", "Buzz", "11", "Fizz", "13", "14", "FizzBuzz", "?"];
-        question = document.createElement("p");
-        
-        // The "\xa0\xa0" represents two blank spaces
-        question.innerHTML = fizzSequence.join("\xa0\xa0");
-        testScore = 0;
-        
-        choices = [
+    // Creates a button for each choice
+    function createChoiceButtons() {
+        // The choices given to the user
+        var choices = [
             "Fizz", 
             "Buzz", 
             "16", 
             "FizzBuzz"
         ];
-        choiceList = [];
         
+        list = []; // Temporary array to contain the button nodes
+        
+        // Create buttons
         for (i = 0; i < choices.length; i += 1) {
-            choice = document.createElement("button");
+            var choice = document.createElement("button");
             choice.id = i;
             choice.className = "choice clickable";
             choice.style.width = "25%";
             choice.innerHTML = choices[i];
             choice.addEventListener("click", choiceClickEvent);
             
-            choiceList.push(choice);
+            list.push(choice);
         }
+        
+        return list;
+    }
+    
+    // Initiate the test
+    function init() {
+        var question,     // Paragraph containing this tests question
+            fizzSequence; // Array containing the fizzbuzz sequence
+        
+        // Set default values for variables
+        fizzSequence = ["1", "2", "Fizz", "4", "Buzz", "Fizz", "7", "8", "Fizz", "Buzz", "11", "Fizz", "13", "14", "FizzBuzz", "?"];
+        question = document.createElement("p");
+        
+        // The "\xa0\xa0" represents two blank spaces
+        question.innerHTML = fizzSequence.join("\xa0\xa0");
+        testScore = 0;
+        
+        // Fill choiceList with button nodes
+        choiceList = createChoiceButtons();
         
         // Clear page
         content.innerHTML = "";
@@ -102,7 +114,7 @@ var FizzBuzz = (function () {
         content.appendChild(header);
         content.appendChild(question);
         
-        for (i = 0; i < choices.length; i += 1) {
+        for (i = 0; i < choiceList.length; i += 1) {
             content.appendChild(choiceList[i]);
         }
     }
@@ -114,8 +126,9 @@ var FizzBuzz = (function () {
         "printIntro": function () { 
             var introText = (
                 "This test is much like the last one, but instead of a question " + 
-                "you will be shown a sequence of numbers and words.<br>Your goal is " +
-                "to figure out which of the four options should come next."
+                "you will be shown a combination of numbers and the words " +
+                "'Fizz', 'Buzz' and 'FizzBuzz'.<br><br>Your goal is " + 
+                "to figure out which of the four options should come next in the sequence."
             );
             var startBtn = Functions.getStartButton(init);
             
