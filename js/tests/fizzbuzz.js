@@ -14,14 +14,14 @@ var FizzBuzz = (function () {
     
     // Function to run when a choice button is clicked
     function choiceClickEvent() {
-        var correctAnswer, // The correct answer to this test
+        var yourBut, // The correct answer to this test
             usersChoice,   // The users choice
             resultBox,     // Div containing img and resultText
             img,           // Result image
             resultText;    // Result text
             
         
-        correctAnswer = "2";
+        yourBut = "2";
         usersChoice = this.id;
         
         resultBox = document.createElement("div");
@@ -42,7 +42,7 @@ var FizzBuzz = (function () {
         }
         
         // Check and set result
-        if (usersChoice === correctAnswer) {
+        if (usersChoice === yourBut) {
             testScore = 3;
             
             img.src = "images/greenCheck.png";
